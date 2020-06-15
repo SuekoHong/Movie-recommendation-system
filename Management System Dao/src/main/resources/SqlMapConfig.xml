@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <environments default="mysql">
+        <environment id="mysql">
+            <transactionManager type="JDBC"></transactionManager>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://rm-m5ed42hc560o11mq8bo.mysql.rds.aliyuncs.com:3306/movie_system_datebase?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
+                <property name="username" value="sueko"/>
+                <property name="password" value="hsh123456"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <mapper resource="com/movies/dao/IUserDaoImpl.xml"/>
+        <mapper resource="com/movies/dao/IMovieDaoImpl.xml"/>
+    </mappers>
+</configuration>

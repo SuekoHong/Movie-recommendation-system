@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.movies.dao.IUserDao">
+    <!-- 查询所有 -->
+    <select id="findAll" resultType="com.movies.domain.User">
+        select * from user_information
+    </select>
+
+    <!-- 保存用户 -->
+    <insert id="saveUser" parameterType="com.movies.domain.User">
+        insert into user_information(userName,userGender,userBirthday,userTel,userEmail,userPassword)values(#{userName},
+        #{userGender},#{userBirthday},#{userTel},#{userEmail},#{userPassword});
+    </insert>
+
+    <!-- 更新用户 --> 
+    <update id="updateUser" parameterType="com.movies.domain.User">
+        update user_information set userName=#{userName},userGender=#{userGender},userBirthday=#{userBirthday},
+        userEmail=#{userEmail},userPassword=#{userPassword} where userTel=#{userTel}
+    </update>
+
+    <!-- 删除用户 -->
+    <delete id="deleteUser" parameterType="java.lang.String">
+        delete from user_information where userTel =#{userTel}
+    </delete>
+
+    <!-- 根据名称模糊查询 -->
+    <select id="findByName" parameterType="java.lang.String" resultType="com.movies.domain.User">
+        select * from user_information where userName like #{name}
+    </select>
+</mapper>
