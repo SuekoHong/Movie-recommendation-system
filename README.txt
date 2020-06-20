@@ -5,3 +5,5 @@ So excepting the dao layer code others code is full of holes,but I'm trying to u
 and hope for accomplishing this system.
 
 I have to say qing's code is a shit.The evidence is the Movie file.
+
+Basically completed.

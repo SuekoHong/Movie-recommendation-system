@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.movies.dao.IMovieDao">
+    <!-- 根据电影id查询电影 -->
+    <select id="findMovieById" parameterType="java.lang.Integer" resultType="com.movies.domain.Movie">
+        select * from movie_information where id =#{Id}
+    </select>
+
+    <!-- 根据电影名称查找电影 -->
+    <select id="findMovieByName" parameterType="java.lang.String" resultType="com.movies.domain.Movie">
+        select * from movie_information where movieName like #{name}
+    </select>
+
+    <!-- 保存电影 -->
+    <insert id="saveMovie" parameterType="com.movies.domain.Movie">
+        insert into movie_information(id,movieName,movieAverageScore,movieEvaluatorNumber,movieFiveStarNumber,
+        movieFourStarNumber,movieThreeStarNumber,movieTwoStarNumber,movieOneStarNumber,movieShortCommentNumber,
+        movieLongCommentNumber,movieType,movieDirector,movieScreenWriter,movieAct,movieProductionArea,movieLanguage,
+        movieDate,movieDuration,movieIMDb,moviePoster,movieIntroduction,movieTotalScore)values(#{id},
+        #{movieName},#{movieAverageScore},#{movieEvaluatorNumber},#{movieFiveStarNumber},#{movieFourStarNumber},
+        #{movieThreeStarNumber},#{movieTwoStarNumber},#{movieOneStarNumber},#{movieShortCommentNumber},
+        #{movieLongCommentNumber},#{movieType},#{movieDirector},#{movieScreenWriter},#{movieAct},
+        #{movieProductionArea}, #{movieLanguage},#{movieDate},#{movieDuration},#{movieIMDb},#{moviePoster},
+        #{movieIntroduction}, #{movieTotalScore});
+    </insert>
+
+    <!-- 更新电影信息 -->
+    <update id="updateMovieByName" parameterType="com.movies.domain.Movie">
+        update movie_information set id=#{id},movieName=#{movieName},movieAverageScore=#{movieAverageScore},
+        movieEvaluatorNumber=#{movieEvaluatorNumber},movieFiveStarNumber=#{movieFiveStarNumber},
+        movieFourStarNumber=#{movieFourStarNumber}, movieThreeStarNumber=#{movieThreeStarNumber},
+        movieTwoStarNumber=#{movieTwoStarNumber},movieOneStarNumber=#{movieOneStarNumber},
+        movieShortCommentNumber=#{movieShortCommentNumber}, movieLongCommentNumber=#{movieLongCommentNumber},
+        movieType=#{movieType},movieDirector=#{movieDirector}, movieScreenWriter=#{movieScreenWriter},
+        movieAct=#{movieAct}, movieProductionArea=#{movieProductionArea}, movieLanguage=#{movieLanguage},
+        movieDate=#{movieDate},movieDuration=#{movieDuration},movieIMDb=#{movieIMDb},moviePoster=#{moviePoster},
+        movieIntroduction=#{movieIntroduction}, movieTotalScore=#{movieTotalScore}
+        where movieName=#{movieName}
+    </update>
+
+    <!-- 通过电影名称删除电影 -->
+    <delete id="deleteMovieByName" parameterType="java.lang.String">
+        delete from movie_information where movieName =#{movieName}
+    </delete>
+
+    <!-- 通过电影id删除电影 -->
+    <delete id="deleteMovieById" parameterType="java.lang.Integer">
+        delete from movie_information where id =#{Id}
+    </delete>
+
+    <!-- 按高分排序通过电影类型查找电影 -->
+    <select id="findMovieByTypeOnScore" parameterType="java.lang.String" resultType="com.movies.domain.Movie">
+        select *  from movie_information where movieType like #{type} order by movieAverageScore desc limit 100
+    </select>
+
+    <!-- 按时间排序通过电影类型查找电影 -->
+    <select id="findMovieByTypeOnTime" parameterType="java.lang.String" resultType="com.movies.domain.Movie">
+        select * from movie_information where movieType like #{type} order by movieDate  desc limit 100
+    </select>
+
+    <!-- 根据条件查询 -->
+    <select id="findMovieByCondition" parameterType="com.movies.domain.MovieQuery"  resultType="com.movies.domain.Movie">
+        select * from movie_information
+        <where>
+            <if test="movie.movieName != null">
+                and movieName like #{movie.movieName}
+            </if>
+            <if test="movie.movieType != null">
+                and movieType like #{movie.movieType}
+            </if>
+            <if test="movie.movieAct != null">
+                and movieAct like #{movie.movieAct}
+            </if>
+            <if test="movie.movieDirector">
+                and movieDirector like #{movie.movieDirector}
+            </if>
+        </where>
+            order by movieAverageScore desc
+        <if test="showNumber != 0">
+            limit #{showNumber}
+        </if>
+    </select>
+
+
+</mapper>

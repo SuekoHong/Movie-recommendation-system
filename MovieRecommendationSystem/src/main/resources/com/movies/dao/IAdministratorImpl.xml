@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.movies.dao.IAdministratorDao">
+    <!-- 查询所有 -->
+    <select id="findAll" resultType="com.movies.domain.Administrator">
+        select * from administrator_information
+    </select>
+
+    <!-- 保存管理员 -->
+    <insert id="saveAdministrator" parameterType="com.movies.domain.Administrator">
+        insert into administrator_information(administratorName,administratorGender,administratorBirthday,administratorTel,administratorEmail,administratorPassword)values(#{administratorName},
+        #{administratorGender},#{administratorBirthday},#{administratorTel},#{administratorEmail},#{administratorPassword});
+    </insert>
+
+    <!-- 更新管理员 -->
+    <update id="updateAdministrator" parameterType="com.movies.domain.Administrator">
+        update administrator_information set administratorName=#{administratorName},administratorGender=#{administratorGender},administratorBirthday=#{administratorBirthday},
+        administratorEmail=#{administratorEmail},administratorPassword=#{administratorPassword} where administratorTel=#{administratorTel}
+    </update>
+
+    <!-- 删除管理员 -->
+    <delete id="deleteAdministrator" parameterType="java.lang.String">
+        delete from administrator_information where administratorTel =#{administratorTel}
+    </delete>
+
+    <!-- 根据名称模糊查询 -->
+    <select id="findByName" parameterType="java.lang.String" resultType="com.movies.domain.Administrator">
+        select * from administrator_information where administratorName like #{name}
+    </select>
+</mapper>
